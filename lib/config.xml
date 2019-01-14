@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app>
+    <title>Config</title>
+    <Server>35.241.68.43</Server>
+    <Profile>nesk_woe</Profile>
+    <Pwd>nesk1234</Pwd>
+    <fromaid>59668</fromaid>>
+    <toaid>200500000</toaid>>
+</web-app>
