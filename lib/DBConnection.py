@@ -3,15 +3,13 @@ import MySQLdb
 from bs4 import BeautifulSoup
 import io
 
-
-
 class MySQL():
 
     def __init__(self, database): #类的初始化操作
 
         path = 'config.xml'
 
-        configfile = io.open(path,encoding='utf-8')
+        configfile = io.open(path, encoding='utf-8')
 
         connectioninf = BeautifulSoup(configfile, 'xml')
 
@@ -32,7 +30,7 @@ class MySQL():
 
         print('insert in process')
 
-        req = self.sqlretrevefield(table_name)
+        req = self.sql_retrevefields(table_name)
 
         field = ''
 

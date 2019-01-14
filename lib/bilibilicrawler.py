@@ -30,8 +30,6 @@ class bilibilicrawler():
 
         return r
 
-
-
     def save_img(self, url, name):   #保存图片
 
         print('开始请求图片地址')
@@ -54,9 +52,7 @@ class bilibilicrawler():
 
         f.close
 
-
-
-    def get_pic(self):                     #使用selenium获取主页图片
+    def get_homepage_pic(self):  #使用selenium获取主页图片
 
         print("开始网页get请求")
 
@@ -68,11 +64,7 @@ class bilibilicrawler():
 
         driver.get(self.web_url)
 
-        textb = driver.page_source
-
         self.scoll_down(driver, 1)
-
-        texta = driver.page_source
 
         print('开始获取标签')
 
@@ -306,3 +298,44 @@ class bilibilicrawler():
             pass
 
         return result
+
+    def retrieve_rank_data(self,urls):   #
+
+        resultlist = []
+
+        try:
+
+            req = requests.get(urls).json()
+
+            for list in req['data']:
+
+                title = list['title'].replace("'", '')
+
+                title = "'" + title[0:48] + "'"
+
+                aid = str(list['aid'])
+
+                play = str(list['play'])
+
+                review = str(list['review'])
+
+                video_review = str(list['video_review'])
+
+                favorites = str(list['favorites'])
+
+                typename = list['typename'].replace("'", '')
+
+                typename = "'" + typename[0:43] + "'"
+
+                result = aid + ',' + title + ',' + play + ',' + review + ',' + video_review + ',' + favorites + ',' + \
+                         typename[0:50] + ', sysdate()'
+                #获得值加上系统时间
+                resultlist.append(result)
+
+        except Exception as e:
+
+            print(e)
+
+            pass
+
+        return resultlist
