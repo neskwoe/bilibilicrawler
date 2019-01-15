@@ -2,7 +2,6 @@
 from DBConnection import MySQL
 from bilibilicrawler import bilibilicrawler
 from bs4 import BeautifulSoup
-import io
 import time
 import datetime
 

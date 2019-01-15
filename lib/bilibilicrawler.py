@@ -286,7 +286,7 @@ class bilibilicrawler():
                 data['dislike']             #点踩数
             )
 
-            title = title.replace("'",'')
+            title = title.replace("'", '')
 
             result = str(data['aid']) + ",'" + title[0:40] + "'," + str(data['view']) + ',' + str(data['danmaku']) + ','\
                      + str(data['reply']) + ',' + str(data['favorite']) + ',' + str(data['coin']) + ',' + \
