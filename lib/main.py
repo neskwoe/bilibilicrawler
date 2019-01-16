@@ -10,7 +10,7 @@ func = sys.argv
 
 path = 'config.xml'
 
-db = MySQL('bibiliviewdata') #连接mysql server，使用bibiliviewdata db
+db = MySQL('bibiliviewdata') #连接mysql server，使用bibiliviewdata database
 
 crawler = bilibilicrawler()
 
@@ -32,5 +32,12 @@ if ('getrank' == func):   #使用get rank data function
 
     print(str(datetime.datetime.now()) + 'data 获取完毕')
 
+elif('getpic' == func):
+
+    crawler.get_homepage_pic()
+
+elif('getoverall' == func):
+
+    crawler.requestViewData()
 
 
