@@ -6,6 +6,7 @@ from selenium import webdriver                      #导入selenium 的 webdrive
 from selenium.webdriver.common.keys import Keys     #导入keys
 from selenium.webdriver.chrome.options import Options
 import time
+from utility import utility
 import threading
 import unicodedata
 from DBConnection import MySQL
@@ -22,7 +23,7 @@ class bilibilicrawler():
 
         self.web_url = 'https://www.bilibili.com/'
 
-        self.folder_path = 'C:\crawler\PicDownLoad/'
+        self.photo_path = 'C:\crawler\PicDownLoad/'
 
     def request(self, url):
 
@@ -64,7 +65,9 @@ class bilibilicrawler():
 
         driver.get(self.web_url)
 
-        self.scoll_down(driver, 1)
+        utility_1 = utility()
+
+        utility_1.scoll_down(driver, 1)   #下拉滚动条
 
         print('开始获取标签')
 
@@ -76,7 +79,7 @@ class bilibilicrawler():
 
         print("开始创建文件夹")
 
-        self.mkdir(self.folder_path)   # 创建文件夹
+        utility_1.mkdir(self.folder_path)   # 创建文件夹
 
         for pic1 in pic_list:   # 遍历所有img标签
 
@@ -99,7 +102,6 @@ class bilibilicrawler():
                     start_p = 0
 
                 end_p = pic_url_sliced.index('.jpg')
-
 
                 img_name = pic_url_sliced[start_p: end_p]
 
@@ -150,37 +152,9 @@ class bilibilicrawler():
 
                 self.save_img(pic_url_sliced, img_name)
 
-    def mkdir(self, path):  ##这个函数创建文件夹
 
-        path = path.strip()
 
-        isExists = os.path.exists(path)
 
-        if not isExists:
-
-            print('创建名字叫做', path, '的文件夹')
-
-            os.makedirs(path)
-
-            print('创建成功！')
-
-        else:
-
-            print(path, '文件夹已经存在了，不再创建')
-
-    def scoll_down(self, driver, times):
-
-        for i in range(times):
-
-            print("开始执行第" + str(i) + "次下拉操作")
-
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")  # 执行JavaScript实现网页下拉倒底部
-
-            print("第" + str(i) + "次下拉操作完成")
-
-            print("等待网页加载")
-
-            time.sleep(10)
 
     def requestSrcList(self):
 

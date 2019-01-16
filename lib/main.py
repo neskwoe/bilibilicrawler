@@ -1,9 +1,12 @@
 # -*- coding:UTF-8 -*-
 from DBConnection import MySQL
 from bilibilicrawler import bilibilicrawler
+import sys
 from bs4 import BeautifulSoup
 import time
 import datetime
+
+func = sys.argv
 
 path = 'config.xml'
 
@@ -11,21 +14,23 @@ db = MySQL('bibiliviewdata') #连接mysql server，使用bibiliviewdata db
 
 crawler = bilibilicrawler()
 
-for i in range(1, 39): #根据rid获取不同分类的data
+if ('getrank' == func):   #使用get rank data function
 
-    resultlist = crawler.retrieve_rank_data('https://api.bilibili.com/x/web-interface/ranking/region?rid={}'.format(i)) #使用api获得ranking data
+    for i in range(1, 39): #根据rid获取不同分类的data
 
-    for result in resultlist:
+        resultlist = crawler.retrieve_rank_data('https://api.bilibili.com/x/web-interface/ranking/region?rid={}'.format(i)) #使用api获得ranking data
 
-        try:
+        for result in resultlist:
 
-            db.sql_insert('rank_data', result)
+            try:
 
-        except:
+                db.sql_insert('rank_data', result)
 
-            print('data issue, please verify the result data: ' + result)
+            except:
 
-print(str(datetime.datetime.now()) + 'data 获取完毕')
+                print('data issue, please verify the result data: ' + result)
+
+    print(str(datetime.datetime.now()) + 'data 获取完毕')
 
 
 
