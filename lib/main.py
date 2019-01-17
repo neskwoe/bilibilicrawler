@@ -16,6 +16,7 @@ crawler = bilibilicrawler()
 if ('getrank' == func):   #使用get rank data function
 
     try:
+
         repeat_days = sys.argv[2]
 
         for i in repeat_days():
@@ -26,9 +27,13 @@ if ('getrank' == func):   #使用get rank data function
 
     except:
 
-        print('Please provide how many day to retrieve')
+        print('default to 60 days')
 
+        for i in range(1, 60):
+            
+            crawler.get_rank_data(db)
 
+            time.sleep(86400)
 
 elif('getpic' == func):
 
@@ -38,5 +43,9 @@ elif('getpic' == func):
 elif('getoverall' == func):
 
     crawler.requestViewData()
+
+else:
+
+    print('please provide correct parameter')
 
 
