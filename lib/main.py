@@ -2,6 +2,7 @@
 from DBConnection import MySQL
 from bilibilicrawler import bilibilicrawler
 import sys
+import time
 
 
 func = sys.argv[1]
@@ -20,6 +21,9 @@ if ('getrank' == func):   #使用get rank data function
         for i in repeat_days():
 
             crawler.get_rank_data(db)
+
+            time.sleep(86400)
+
     except:
 
         print('Please provide how many day to retrieve')

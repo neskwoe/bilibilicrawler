@@ -33,7 +33,7 @@ class bilibilicrawler():
 
         self.photo_path = pathinfo.find('picpath').text.strip()
 
-        crawlerlogging = crawlerlog()
+        self.crawlerlogging = crawlerlog()
 
     def request(self, url):
 
@@ -43,8 +43,7 @@ class bilibilicrawler():
 
     def __save_img(self, url, name):   #保存图片
 
-        #crawlerlogging.
-        #print('开始请求图片地址')
+        self.crawlerlogging.log_event('开始请求图片地址',20)
 
         if ('https:' not in url):
 
@@ -56,13 +55,13 @@ class bilibilicrawler():
 
         file_name = self.photo_path + name + '.jpg'
 
-        print('开始保存文件')
+        self.crawlerlogging.log_event('开始保存文件', 20)
 
         f = open(file_name, 'ab')
 
         f.write(img.content)
 
-        print(file_name, '文件保存成功！')
+        self.crawlerlogging.log_event('文件保存成功!', 20)
 
         f.close
 
@@ -142,6 +141,7 @@ class bilibilicrawler():
                 img_name = pic_url_sliced[start_p: end_p]
 
                 self.__save_img(pic_url_sliced, img_name)
+
             elif('.bmp' in pic_url):
 
                 if('@' in pic_url):
@@ -185,9 +185,10 @@ class bilibilicrawler():
 
                     print('data issue, please verify the result data: ' + result)
 
-        print(str(datetime.datetime.now()) + ' data 获取完毕')
+        self.crawlerlogging.log_event(str(datetime.datetime.now()) + ' data 获取完毕', 20)
 
         sys.stdout.flush()
+
         sys.stderr.flush()
 
     def __requestSrcList(self):
@@ -307,7 +308,7 @@ class bilibilicrawler():
 
         return result
 
-    def __retrieve_rank_data(self,urls):   #
+    def __retrieve_rank_data(self, urls):   #
 
         resultlist = []
 

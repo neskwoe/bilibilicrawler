@@ -14,7 +14,7 @@ class crawlerlog():
 
         pathinfo = BeautifulSoup(configfile, 'xml')
 
-        self.log_path = pathinfo.find('picpath').text.strip()
+        self.log_path = pathinfo.find('logpath').text.strip()
 
         logging.basicConfig(filename=self.log_path + str(datetime.date.today()) + '.log',
                             format='[%(asctime)s-%(filename)s-%(levelname)s:%(message)s]', level=logging.DEBUG,
@@ -22,4 +22,21 @@ class crawlerlog():
 
     def log_event(self, msg, severity):
 
-        logging.error(msg)
+        if (severity == 10):
+
+            logging.debug(msg)
+        elif (severity == 20):
+
+            logging.info(msg)
+
+        elif (severity == 30):
+
+            logging.warning(msg)
+
+        elif (severity == 40):
+
+            logging.error(msg)
+
+        elif (severity == 50):
+
+            logging.critical(msg)

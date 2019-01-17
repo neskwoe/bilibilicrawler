@@ -9,7 +9,8 @@ crawler = bilibilicrawler()
 
 log = crawlerlog()
 crawler = bilibilicrawler()
+crawler.get_homepage_pic()
 
-#log.log_event('test',40)
+#log.log_event('test', 40)
 
-crawler.get_rank_data(db)
+#crawler.get_rank_data(db)
