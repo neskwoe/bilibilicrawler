@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\nesk_\PycharmProjects\bilibilicrawler\venv"
+set "VIRTUAL_ENV=D:\Develop\Python\bilibilicrawler\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

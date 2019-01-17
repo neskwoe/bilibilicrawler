@@ -25,7 +25,6 @@ class MySQL():
 
         self.cursor = self.db.cursor()
 
-
     def sql_insert(self, table_name, values):
 
         print('insert in process')

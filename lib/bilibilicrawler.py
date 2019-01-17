@@ -7,8 +7,10 @@ from selenium.webdriver.common.keys import Keys     #导入keys
 from selenium.webdriver.chrome.options import Options
 import time
 from utility import utility
-import threading
-import unicodedata
+import datetime
+import sys
+import io
+from crawlerlog import crawlerlog
 from DBConnection import MySQL
 
 
@@ -23,7 +25,15 @@ class bilibilicrawler():
 
         self.web_url = 'https://www.bilibili.com/'
 
-        self.photo_path = 'C:\crawler\PicDownLoad/'
+        path = 'config.xml'
+
+        configfile = io.open(path, encoding='utf-8')
+
+        pathinfo = BeautifulSoup(configfile, 'xml')
+
+        self.photo_path = pathinfo.find('picpath').text.strip()
+
+        crawlerlogging = crawlerlog()
 
     def request(self, url):
 
@@ -31,17 +41,20 @@ class bilibilicrawler():
 
         return r
 
-    def save_img(self, url, name):   #保存图片
+    def __save_img(self, url, name):   #保存图片
 
-        print('开始请求图片地址')
+        #crawlerlogging.
+        #print('开始请求图片地址')
 
         if ('https:' not in url):
+
             img = self.request('https:' + url)
 
         else:
+
             img = self.request(url)
 
-        file_name = self.folder_path + name + '.jpg'
+        file_name = self.photo_path + name + '.jpg'
 
         print('开始保存文件')
 
@@ -65,7 +78,7 @@ class bilibilicrawler():
 
         driver.get(self.web_url)
 
-        utility_1 = utility()
+        utility_1 = utility() #实例化utility类
 
         utility_1.scoll_down(driver, 1)   #下拉滚动条
 
@@ -79,7 +92,7 @@ class bilibilicrawler():
 
         print("开始创建文件夹")
 
-        utility_1.mkdir(self.folder_path)   # 创建文件夹
+        utility_1.mkdir(self.photo_path)   # 创建文件夹
 
         for pic1 in pic_list:   # 遍历所有img标签
 
@@ -105,7 +118,7 @@ class bilibilicrawler():
 
                 img_name = pic_url_sliced[start_p: end_p]
 
-                self.save_img(pic_url_sliced, img_name)
+                self.__save_img(pic_url_sliced, img_name)
 
             elif ('.png' in pic_url):
 
@@ -128,7 +141,7 @@ class bilibilicrawler():
 
                 img_name = pic_url_sliced[start_p: end_p]
 
-                self.save_img(pic_url_sliced, img_name)
+                self.__save_img(pic_url_sliced, img_name)
             elif('.bmp' in pic_url):
 
                 if('@' in pic_url):
@@ -150,13 +163,34 @@ class bilibilicrawler():
 
                 img_name = pic_url_sliced[start_p: end_p]
 
-                self.save_img(pic_url_sliced, img_name)
+                self.__save_img(pic_url_sliced, img_name)
+        sys.stdout.flush()
+        sys.stderr.flush()
 
+    def get_rank_data(self, db):
 
+        for i in range(1, 39):  # 根据rid获取不同分类的data
 
+            resultlist = self.__retrieve_rank_data(
 
+                'https://api.bilibili.com/x/web-interface/ranking/region?rid={}'.format(i))  # 使用api获得ranking data
 
-    def requestSrcList(self):
+            for result in resultlist:
+
+                try:
+
+                    db.sql_insert('rank_data', result)
+
+                except:
+
+                    print('data issue, please verify the result data: ' + result)
+
+        print(str(datetime.datetime.now()) + ' data 获取完毕')
+
+        sys.stdout.flush()
+        sys.stderr.flush()
+
+    def __requestSrcList(self):
 
         print("开始网页get请求")
 
@@ -227,7 +261,7 @@ class bilibilicrawler():
 
         print('保存完成')
 
-    def requestViewData(self, urls):
+    def __requestViewData(self, urls):
 
         result = ''
 
@@ -273,7 +307,7 @@ class bilibilicrawler():
 
         return result
 
-    def retrieve_rank_data(self,urls):   #
+    def __retrieve_rank_data(self,urls):   #
 
         resultlist = []
 

@@ -6,4 +6,6 @@
     <Pwd>nesk1234</Pwd>
     <fromaid>59668</fromaid>>
     <toaid>200500000</toaid>>
+    <logpath>C:\crawler\crawlerlog</logpath>
+    <picpath>C:\crawler\PicDownLoad</picpath>>
 </web-app>
