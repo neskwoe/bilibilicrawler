@@ -2,12 +2,15 @@
 import MySQLdb
 from bs4 import BeautifulSoup
 import io
+import os
 
 class MySQL():
 
     def __init__(self, database): #类的初始化操作
 
-        path = 'config.xml'
+        module_path = os.path.dirname(__file__)
+
+        path = module_path + '\config.xml'
 
         configfile = io.open(path, encoding='utf-8')
 

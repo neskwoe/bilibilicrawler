@@ -12,6 +12,7 @@ import sys
 import io
 from crawlerlog import crawlerlog
 from DBConnection import MySQL
+import os
 
 
 
@@ -25,7 +26,9 @@ class bilibilicrawler():
 
         self.web_url = 'https://www.bilibili.com/'
 
-        path = 'config.xml'
+        module_path = os.path.dirname(__file__)
+
+        path = module_path + '\config.xml'
 
         configfile = io.open(path, encoding='utf-8')
 
