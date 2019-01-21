@@ -28,7 +28,7 @@ class bilibilicrawler():
 
         module_path = os.path.dirname(__file__)
 
-        path = module_path + '\config.xml'
+        path = module_path + '/config.xml'
 
         configfile = io.open(path, encoding='utf-8')
 
