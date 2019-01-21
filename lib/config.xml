@@ -3,7 +3,7 @@
     <title>Config</title>
     <Server>35.241.68.43</Server>
     <Profile>nesk_woe</Profile>
-    <Pwd>nesk1234</Pwd>
+    <Pwd></Pwd>
     <fromaid>59668</fromaid>>
     <toaid>200500000</toaid>>
     <logpath>C:\crawler\crawlerlog</logpath>
